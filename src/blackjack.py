@@ -1,48 +1,25 @@
 from deck import Deck
+from hand import Hand
+from card import Card
+import logger
+
 
 class Blackjack:
-    """Main class for the game"""
+    def __init__(self):
+        self.deck = Deck()
+        self.hand = Hand()
+
     def start_game(self):
-        deck = Deck()
-        deck.shuffle()
-        print(list(card.value for card in deck.cards))
+        self.deck.shuffle()
+        print(list(card.value for card in self.deck.cards))
 
     def hit(self):
-        pass
+        hand = self.hand
+        card = self.deck.deal()
+        hand.hit(card)
 
     def stand(self):
-        pass
+        print("Score: ", self.hand.score())
 
-Blackjack().start_game()
 
-class Hand:
-    def __init__(self, cards):
-        self.cards = cards
-
-    def hit(self, card):
-        self.cards.append(card)
-
-    def stand(self):
-        pass
-
-    def score(self):
-        aces = 0
-        values = {
-            '2': 2,
-            '3': 3,
-            '4': 4,
-            '5': 5,
-            '6': 6,
-            '7': 7,
-            '8': 8,
-            '9': 9,
-            '10': 10,
-            'J': 10,
-            'Q': 10,
-            'K': 10
-        }
-        for card in self.cards:
-            value = values.get(card.value, 0)
-            if value == 'A':
-                aces += 1
-        
+hand = Hand()
