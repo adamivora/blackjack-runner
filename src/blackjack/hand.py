@@ -2,11 +2,8 @@ class Hand:
     def __init__(self):
         self.cards = []
 
-    def hit(self, card):
+    def add_card(self, card):
         self.cards.append(card)
-
-    def stand(self):
-        pass
 
     def score(self):
         score = 0
