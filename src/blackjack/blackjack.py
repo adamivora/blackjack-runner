@@ -23,7 +23,7 @@ class Blackjack:
             if player.will_hit():
                 self.hit(player)
                 if (player.hand.score() > 21):
-                    this.inProgress = False
+                    self.inProgress = False
             else:
                 self.stand()
                 self.inProgress = False
@@ -35,6 +35,7 @@ class Blackjack:
 
     def end_game(self, player):
         dealer = self.dealer
+
         playerScore = player.hand.score()
         dealerScore = dealer.hand.score()
 

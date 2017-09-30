@@ -4,9 +4,10 @@ from blackjack.hand import Hand
 
 
 class Player(metaclass=abc.ABCMeta):
-    def __init__(self):
+    def __init__(self, money, name=None):
         self.hand = Hand()
-        self.money = 100
+        self.money = money
+        self.name = name
 
     @abc.abstractmethod
     def will_hit(self):
@@ -19,4 +20,6 @@ class Player(metaclass=abc.ABCMeta):
         player.money += bet
 
     def __str__(self):
+        if self.name:
+            return self.name
         return self.__class__.__name__

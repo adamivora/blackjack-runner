@@ -1,7 +1,7 @@
-from blackjack.blackjack import Blackjack
+from blackjack.runner import Runner
 from blackjack.players.hitter import Hitter
 
-blackjack = Blackjack()
-player = Hitter(10)
+players1 = [Hitter(15), Hitter(16), Hitter(21)]
 
-blackjack.start_game(player)
+runner = Runner(players1)
+runner.run(1)
