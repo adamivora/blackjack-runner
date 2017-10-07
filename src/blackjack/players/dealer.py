@@ -9,8 +9,8 @@ class Dealer(Player):
     but different win conditions.
     """
 
-    def __init__(self, money=100):
-        super(Dealer, self).__init__(money)
+    def __init__(self, balance=100):
+        super(Dealer, self).__init__(balance)
 
     def will_hit(self):
         return self.hand.get_score() < 17

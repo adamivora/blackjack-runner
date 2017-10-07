@@ -14,7 +14,7 @@ class Graph:
 
         plt.axis([1, 4, 0, 100])
         plt.xlabel('Rounds')
-        plt.ylabel('Money')
+        plt.ylabel('Balance')
 
     def draw(self):
         plt.show()
