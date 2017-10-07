@@ -13,4 +13,4 @@ class Dealer(Player):
         super(Dealer, self).__init__(money)
 
     def will_hit(self):
-        return self.hand.score() < 17
+        return self.hand.get_score() < 17

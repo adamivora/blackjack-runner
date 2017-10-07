@@ -5,7 +5,7 @@ class Hand:
     def add_card(self, card):
         self.cards.append(card)
 
-    def score(self):
+    def get_score(self):
         score = 0
         aces = 0
         values = {

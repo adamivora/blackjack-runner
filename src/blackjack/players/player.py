@@ -13,7 +13,13 @@ class Player(metaclass=abc.ABCMeta):
     def will_hit(self):
         pass
 
-    def give_money_to(self, player, bet):
+    def on_card_shown(self):
+        pass
+
+    def has_natural(self):
+        return self.hand.get_score() == 21
+
+    def pay(self, player, bet):
         logger.info('[BET] {0} gave {1} chips to {2}.'.format(
             self, bet, player))
         self.money -= bet

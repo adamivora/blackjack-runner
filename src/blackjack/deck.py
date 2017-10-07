@@ -4,10 +4,10 @@ from blackjack.card import Card
 
 class Deck:
     index = 0
-    size = 52
 
-    def __init__(self):
+    def __init__(self, decks=1):
         self.cards = self.create_deck()
+        self.size = 52 * decks
 
     def create_deck(self):
         cards = []
@@ -26,4 +26,5 @@ class Deck:
         self.index += 1
         if self.index == self.size:
             self.index = 0
+            self.shuffle()
         return card
