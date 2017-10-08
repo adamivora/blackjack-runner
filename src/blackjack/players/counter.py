@@ -2,9 +2,12 @@ from blackjack.players.player import Player
 
 
 class Counter(Player):
-    def __init__(self, maxScore, balance=100):
-        super(Counter, self).__init__(balance)
-        self.maxScore = maxScore
+    def __init__(self, balance=100, name=None):
+        super(Counter, self).__init__(balance, name)
 
     def will_hit(self):
-        return self.hand.get_score() < self.maxScore
+        return False
+
+    def on_card_dealt(self, card, is_dealer):
+        if is_dealer:
+            self.dealer_card = card

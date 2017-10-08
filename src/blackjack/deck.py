@@ -14,7 +14,7 @@ class Deck:
         values = ['2', '3', '4', '5', '6', '7', '8',
                   '9', '10', 'J', 'Q', 'K', 'A']
         for value in values:
-            for x in range(0, 4):
+            for x in range(4):
                 cards.append(Card(value))
         return cards
 

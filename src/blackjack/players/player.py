@@ -6,6 +6,7 @@ from blackjack.hand import Hand
 class Player(metaclass=abc.ABCMeta):
     def __init__(self, balance, name=None):
         self.hand = Hand()
+        self.starting_balance = balance
         self.balance = balance
         self.name = name
 
@@ -18,7 +19,7 @@ class Player(metaclass=abc.ABCMeta):
     def will_hit(self):
         pass
 
-    def on_card_shown(self, card):
+    def on_card_dealt(self, card, is_dealer):
         pass
 
     def has_natural(self):
@@ -29,3 +30,9 @@ class Player(metaclass=abc.ABCMeta):
             self, bet, player))
         self.balance -= bet
         player.balance += bet
+
+    def reset(self):
+        self.hand = Hand()
+
+    def reset_balance(self):
+        self.balance = self.starting_balance

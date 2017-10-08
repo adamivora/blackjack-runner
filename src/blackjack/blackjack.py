@@ -1,7 +1,5 @@
 from blackjack.logger import logger
 from blackjack.deck import Deck
-from blackjack.hand import Hand
-from blackjack.card import Card
 from blackjack.players.dealer import Dealer
 from blackjack.player_record import PlayerRecord
 from blackjack.result import Result
@@ -29,7 +27,7 @@ class Blackjack:
         return results
 
     def deal_starting_hands(self):
-        for i in range(0, 2):
+        for i in range(2):
             for player in self.players + [self.dealer]:
                 self.deal_card(player)
 
@@ -47,7 +45,7 @@ class Blackjack:
                     self.end_player_turn(player, 'D')
         else:
             for player in players_with_naturals:
-                self.end_player_turn(player, True)
+                self.end_player_turn(player, 'W', True)
 
     def run_main_loop(self):
         active_players = self.get_active_players()
@@ -70,12 +68,15 @@ class Blackjack:
 
         for player in self.get_standing_players():
             player_score = player.hand.get_score()
-            if player_score == dealer_score:
-                result = 'D'
-            elif player_score > dealer_score:
+            if dealer_score > 21:
                 result = 'W'
             else:
-                result = 'L'
+                if player_score == dealer_score:
+                    result = 'D'
+                elif player_score > dealer_score:
+                    result = 'W'
+                else:
+                    result = 'L'
             self.end_player_turn(player, result)
 
     def generate_round_results(self):
@@ -88,12 +89,13 @@ class Blackjack:
             balance = player.balance
             result = record.result
             results.append(Result(
-                player_score, dealer_score, bet, balance, result))
+                player, player_score, dealer_score, bet, balance, result))
         return results
 
     def reset_records(self):
         for player in self.players:
             self.player_records[player].reset()
+        self.dealer.reset()
 
     def get_active_players(self):
         return [player for player in self.players
@@ -108,7 +110,7 @@ class Blackjack:
         record.in_game = False
         record.result = result
 
-    def end_player_turn(self, player, result: str, natural: bool=False):
+    def end_player_turn(self, player, result, natural=False):
         """
         End turn with provided result and split bets accordingly.
 
@@ -117,27 +119,27 @@ class Blackjack:
         result  -- ['W', 'L', 'D'] for win, loss or draw
         natural -- Indicates if the player has a natural 21
         """
-
+        logger.info('[RESULT] {0}: {1}'.format(player, result))
         bet = self.player_records[player].bet
         if result == 'W':
             if natural:
-                bet = int(bet * 1.5)
+                bet = bet * 1.5
             self.dealer.pay(player, bet)
         elif result == 'L':
             player.pay(self.dealer, bet)
 
         self.set_player_finished(player, result)
 
-    def notify_players(self, card):
+    def notify_players(self, card, is_dealer):
         for player in self.players:
-            player.on_card_shown(card)
+            player.on_card_dealt(card, is_dealer)
 
     def deal_card(self, player, face_up=True):
         card = self.deck.deal()
         logger.info('[HIT] ({0}) {1}'.format(player, card))
         player.hand.add_card(card)
         if face_up:
-            self.notify_players(card)
+            self.notify_players(card, player == self.dealer)
 
     def stand(self, player):
         self.player_records[player].is_standing = True

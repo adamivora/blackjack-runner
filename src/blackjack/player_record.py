@@ -2,8 +2,8 @@ class PlayerRecord:
     default_bet = 1
 
     def __init__(self, player):
-        self.reset()
         self.player = player
+        self.reset()
         self.bet = self.default_bet
 
     def has_natural(self):
@@ -15,4 +15,4 @@ class PlayerRecord:
     def reset(self):
         self.is_standing = False
         self.in_game = True
-        self.result = None
+        self.player.reset()
