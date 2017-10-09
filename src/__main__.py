@@ -1,3 +1,4 @@
+import numpy as np
 from blackjack.runner import Runner
 from blackjack.players.hitter import Hitter
 from blackjack.players.professional import Professional
@@ -26,13 +27,22 @@ players_list = [players1, players2]
 
 for players in players_list:
     runner = Runner(players)
-    results = runner.run(rounds)
-    x = dict()
-    for player in results:
-        x[player] = [round_result.balance for round_result in results[player]]
+    results = []
 
-    graph.add_graph(x, rounds)
-    for player in players1:
-        player.reset_balance()
+    for i in range(50):
+        results.append(runner.run(rounds))
+        for player in players:
+            player.reset_balance()
+
+    x = dict()
+    for i, result in enumerate(results):
+        for player in result:
+            if i == 0:
+                x[player] = []
+            x[player].append([round_result.balance for round_result
+                              in result[player]])
+    y = {player: np.mean(player_result, axis=0)
+         for player, player_result in x.items()}
+    graph.add_graph(y, rounds)
 
 graph.draw()
