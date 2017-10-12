@@ -1,16 +1,20 @@
 import abc
 from blackjack.logger import logger
 from blackjack.hand import Hand
+from blackjack.strategies.bet_strategy import no_strategy
 
 
 class Player(metaclass=abc.ABCMeta):
     default_bet = 1
 
-    def __init__(self, balance, name=None):
+    def __init__(self, balance, name=None, strategy=no_strategy):
         self.hand = Hand()
         self.starting_balance = balance
         self.balance = balance
         self.name = name
+        self.strategy = strategy
+        self.score = 0
+        self.dealer_card = None
 
     def __str__(self):
         if self.name:
@@ -22,13 +26,15 @@ class Player(metaclass=abc.ABCMeta):
         pass
 
     def on_card_dealt(self, card, is_dealer):
-        pass
+        if is_dealer:
+            self.dealer_card = card
+        self.score += self.strategy.get_count(card)
 
     def on_shuffle(self):
-        pass
+        self.score = 0
 
     def get_bet(self):
-        return self.default_bet
+        return self.strategy.get_bet(self.score)
 
     def has_natural(self):
         return self.hand.get_score() == 21

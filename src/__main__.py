@@ -9,26 +9,32 @@ rounds = 400
 graph = Graph('Rounds', 'Balance')
 
 players1 = [
-    Hitter(13, "Hitter13"),
-    Hitter(14, "Hitter14"),
-    Hitter(15, "Hitter15"),
-    Hitter(16, "Hitter16"),
-    Hitter(17, "Hitter17"),
-    Hitter(18, "Hitter18"),
-    Hitter(19, "Hitter19"),
-    Hitter(20, "Hitter20"),
-    Hitter(21, "Hitter21")
+    Hitter(13),
+    Hitter(14),
+    Hitter(15),
+    Hitter(16),
+    Hitter(17),
+    Hitter(18),
+    Hitter(19),
+    Hitter(20),
+    Hitter(21)
 ]
 players2 = [
-    Hitter(17, "Hitter17"),
+    Hitter(17),
     Professional()
 ]
 players3 = [
     Professional(),
-    Counter()
+    Counter('Hi-Lo'),
+    Counter('K-O'),
+    Counter('Hi-Opt I'),
+    Counter('Hi-Opt II'),
+    Counter('Halves'),
+    Counter('Omega II'),
+    Counter('Zen')
 ]
 
-players_list = [players3]
+players_list = [players1, players2, players3]
 
 for players in players_list:
     runner = Runner(players)
