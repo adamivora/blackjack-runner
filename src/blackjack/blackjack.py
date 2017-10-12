@@ -6,6 +6,9 @@ from blackjack.result import Result
 
 
 class Blackjack:
+    shuffle_counter = 0
+    max_deals = 50
+
     def __init__(self, players):
         self.deck = Deck()
         self.deck.shuffle()
@@ -27,9 +30,12 @@ class Blackjack:
         return results
 
     def deal_starting_hands(self):
-        for i in range(2):
-            for player in self.players + [self.dealer]:
-                self.deal_card(player)
+        for player in self.players:
+            self.player_records[player].bet = player.get_bet()
+            self.deal_card(player)
+        self.deal_card(self.dealer)
+        for player in self.players + [self.dealer]:
+            self.deal_card(player)
 
     def pay_out_naturals(self):
         dealer = self.dealer
@@ -134,12 +140,21 @@ class Blackjack:
         for player in self.players:
             player.on_card_dealt(card, is_dealer)
 
+    def notify_players_shuffle(self):
+        for player in self.players:
+            player.on_shuffle()
+
     def deal_card(self, player, face_up=True):
         card = self.deck.deal()
         logger.info('[HIT] ({0}) {1}'.format(player, card))
         player.hand.add_card(card)
         if face_up:
             self.notify_players(card, player == self.dealer)
+        if self.shuffle_counter > self.max_deals:
+            self.notify_players_shuffle()
+            self.deck.shuffle()
+            self.shuffle_counter = 0
+        self.shuffle_counter += 1
 
     def stand(self, player):
         self.player_records[player].is_standing = True

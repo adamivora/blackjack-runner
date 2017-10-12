@@ -26,5 +26,4 @@ class Deck:
         self.index += 1
         if self.index == self.size:
             self.index = 0
-            self.shuffle()
         return card

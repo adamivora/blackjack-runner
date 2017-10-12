@@ -2,6 +2,7 @@ import numpy as np
 from blackjack.runner import Runner
 from blackjack.players.hitter import Hitter
 from blackjack.players.professional import Professional
+from blackjack.players.counter import Counter
 from blackjack.graph import Graph
 
 rounds = 400
@@ -22,8 +23,12 @@ players2 = [
     Hitter(17, "Hitter17"),
     Professional()
 ]
+players3 = [
+    Professional(),
+    Counter()
+]
 
-players_list = [players1, players2]
+players_list = [players3]
 
 for players in players_list:
     runner = Runner(players)

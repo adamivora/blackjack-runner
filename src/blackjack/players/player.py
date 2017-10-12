@@ -4,6 +4,8 @@ from blackjack.hand import Hand
 
 
 class Player(metaclass=abc.ABCMeta):
+    default_bet = 1
+
     def __init__(self, balance, name=None):
         self.hand = Hand()
         self.starting_balance = balance
@@ -21,6 +23,12 @@ class Player(metaclass=abc.ABCMeta):
 
     def on_card_dealt(self, card, is_dealer):
         pass
+
+    def on_shuffle(self):
+        pass
+
+    def get_bet(self):
+        return self.default_bet
 
     def has_natural(self):
         return self.hand.get_score() == 21

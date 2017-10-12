@@ -1,10 +1,7 @@
 class PlayerRecord:
-    default_bet = 1
-
     def __init__(self, player):
         self.player = player
         self.reset()
-        self.bet = self.default_bet
 
     def has_natural(self):
         return self.player.hand.get_score() == 21
