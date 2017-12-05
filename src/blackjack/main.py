@@ -8,8 +8,7 @@ from blackjack.graph import Graph
 
 class Main:
     hitters = [Hitter(13), Hitter(14), Hitter(15), Hitter(16), Hitter(17),
-               Hitter(18), Hitter(19), Hitter(20), Hitter(21)]
-    hitter_and_professional = [Professional(), Hitter(16)]
+               Hitter(18), Hitter(19), Hitter(20), Hitter(21), Professional()]
     betting_strategies = [
         Professional(), Counter('Hi-Lo'), Counter('K-O'), Counter('Hi-Opt I'),
         Counter('Hi-Opt II'), Counter('Halves'), Counter('Omega II'),
