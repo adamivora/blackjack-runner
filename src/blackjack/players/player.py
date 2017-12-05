@@ -5,6 +5,9 @@ from blackjack.strategies.bet_strategy import no_strategy
 
 
 class Player(metaclass=abc.ABCMeta):
+    """
+    Base class for all players
+    """
     default_bet = 1
 
     def __init__(self, balance, name=None, strategy=no_strategy):

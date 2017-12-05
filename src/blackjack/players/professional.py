@@ -3,6 +3,10 @@ from blackjack.strategies.hit_strategy import should_hit
 
 
 class Professional(Player):
+    """
+    Professional uses optimal betting strategy
+    """
+
     def __init__(self, name=None, balance=100):
         super(Professional, self).__init__(balance, name)
         self.dealer_card = None
